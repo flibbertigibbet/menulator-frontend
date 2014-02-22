@@ -131,9 +131,10 @@ function searchRestaurants(searchStr) {
 	console.log('search for restaurants with ' + gotTxt + ' now.');
 	
 	// TODO: search for stuff here
+	/*
 	$.ajax({url: qryRestUrl, dataType:'json', 
 	  error: function(xhr, status, error) {
-	    console.log('darn.');
+	    console.log('Oh dear.');
       console.log(error);
       console.log(xhr.statusText);
       console.log(xhr.responseText);
@@ -150,7 +151,29 @@ function searchRestaurants(searchStr) {
       console.log('location ID: ' + i.LocationID);
     });
     amQryRest = false;
-});
+  });
+  */
+  
+  $.ajax({url: qryRestUrl + '/search/' + gotTxt, dataType:'json', 
+	  error: function(xhr, status, error) {
+	    console.log('Oh dear.');
+      console.log(error);
+      console.log(xhr.statusText);
+      console.log(xhr.responseText);
+      amQryRest = false;
+    }
+  }).done(function(data) {
+    console.log('done with search');
+    console.log(data);
+    $.each(data, function(data, i) {
+      console.log('restaurant name: ' + i.Title);
+      console.log('location: ' + i.Latitude + ', ' + i.Longitude);
+      console.log('phone: ' + i.Phone);
+      console.log('restaurant ID: ' + i.RestaurantID);
+      console.log('location ID: ' + i.LocationID);
+    });
+    amQryRest = false;
+  });
 }
 
 var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
