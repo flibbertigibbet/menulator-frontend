@@ -142,6 +142,13 @@ function searchRestaurants(searchStr) {
   }).done(function(data) {
     console.log('done');
     console.log(data);
+    $.each(data, function(data, i) {
+      console.log('restaurant name: ' + i.Title);
+      console.log('location: ' + i.Latitude + ', ' + i.Longitude);
+      console.log('phone: ' + i.Phone);
+      console.log('restaurant ID: ' + i.RestaurantID);
+      console.log('location ID: ' + i.LocationID);
+    });
     amQryRest = false;
 });
 }
