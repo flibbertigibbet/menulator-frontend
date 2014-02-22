@@ -164,16 +164,22 @@ function gotAddress(response) {
     $('#searchAddr').prop('disabled', false);
     return;
   }
+  
+  console.log(response);
   var useAddr = response[0];
+  console.log(useAddr.display_name);
+  
   //console.log(useAddr.lat + " " + useAddr.lon + " " + useAddr.display_name);
   var myLatLng = L.latLng(useAddr.lat, useAddr.lon);
   // re-enable button
   $('#searchAddr').prop('disabled', false);
   
   if (myMarker) {  
-      myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').update().openPopup();
+      //myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').update().openPopup();
+      myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.display_name + '</p>').update().openPopup();
     } else {
-      myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').setZIndexOffset(999).addTo(map).openPopup();
+      //myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').setZIndexOffset(999).addTo(map).openPopup();
+      myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.display_name + '</p>').setZIndexOffset(999).addTo(map).openPopup();
     }
   
   queryForLatLng(useAddr.lat, useAddr.lon);
@@ -199,7 +205,7 @@ function onLocationFound(e) {
     myMarker = L.marker(e.latlng).bindPopup('<p>' + e.latlng + '</p>').setZIndexOffset(99).addTo(map).openPopup();
   }
   
-  queryForLatLng(position.coords.latitude, position.coords.longitude);
+  queryForLatLng(e.latlng.lat, e.latlng.lng);
 }
 
 map.on('locationfound', onLocationFound);
