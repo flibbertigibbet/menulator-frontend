@@ -51,7 +51,7 @@
         <h4 class="modal-title" id="aboutModalLabel">Menulator</h4>
       </div>
       <div id="aboutModalBody" class="modal-body">
-        <p>Menulator project for <a href="http://phillycodefest.com/">Philly Codefest 2014</a>.</p><p>To look up zone information for a point on the map, right-click or long-press the spot.  To look up zone information by address, enter the address into the search bar.  Address lookup provided by OpenStreetMap's <a href="http://nominatim.openstreetmap.org/">Nominatim geocoder</a>.</p><p><a href="https://twitter.com/banderkat">@Banderkat</a></p>
+        <p>Menulator project for <a href="http://phillycodefest.com/">Philly Codefest 2014</a>.</p><p>To zoom to a point on the map, right-click or long-press the spot.  To zoom to an address, enter it into the address search bar.  Address lookup provided by OpenStreetMap's <a href="http://nominatim.openstreetmap.org/">Nominatim geocoder</a>.</p><p>To search for a restaurant, enter your search term into the restaurant search box.  You can search by restauant name, type of cuisine, or other tags.</p><p><a href="https://twitter.com/banderkat">@Banderkat</a></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -120,6 +120,7 @@ $('form').submit(function () {
   return false;
 });
 
+var qryRestUrl = "http://menulator.azurewebsites.net/api/location"
 var amQryRest = false;
 function searchRestaurants(searchStr) {
   if (amQryRest) return;
@@ -128,15 +129,24 @@ function searchRestaurants(searchStr) {
   // disable button while searching
 	$('#searchRest').prop('disabled', true);
 	console.log('search for restaurants with ' + gotTxt + ' now.');
-	// TODO: search for stuff here
 	
-	////////////////////
-	amQryRest = false;
+	// TODO: search for stuff here
+	$.ajax({url: qryRestUrl, dataType:'json', 
+	  error: function(xhr, status, error) {
+	    console.log('darn.');
+      console.log(error);
+      console.log(xhr.statusText);
+      console.log(xhr.responseText);
+      amQryRest = false;
+    }
+  }).done(function(data) {
+    console.log('done');
+    console.log(data);
+    amQryRest = false;
+});
 }
 
-var infoLayerStack = [];
-var showingInfoLayer, showingGridControl;
-var qryUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
+var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
 
 var amQryAddr = false;
 function searchAddress(searchStr) {
@@ -145,7 +155,7 @@ function searchAddress(searchStr) {
 	var gotTxt = $('#enteredAddr').val();
 	// disable button while searching
 	$('#searchAddr').prop('disabled', true);
-	$.ajax({url: qryUrl, data: { 'q': gotTxt }, dataType:'jsonp', 
+	$.ajax({url: qryAddrUrl, data: { 'q': gotTxt }, dataType:'jsonp', 
 	  error: function(xhr, status, error) {
   //console.log(error);
   //console.log(xhr.statusText);
@@ -166,7 +176,7 @@ $("#enteredRest").keypress(function(event) {
   var keycode = (event.keyCode ? event.keyCode : event.which);
     if(keycode == '13'){
       // search on 'Enter' keypress
-      if (!amQryRest) searchRest();
+      if (!amQryRest) searchRestaurants();
     }
 });
 
@@ -234,9 +244,9 @@ map.on('locationerror', onLocationError);
   
 map.on('contextmenu', function(ev) {
     if (myMarker) {  
-      myMarker.setLatLng(ev.latlng).setZIndexOffset(999).setPopupContent('<p>' + ev.latlng + '</p>').update().openPopup();
+      myMarker.setLatLng(ev.latlng).setZIndexOffset(999).setPopupContent('<p>' + ev.latlng + '</p>').update(); //.openPopup();
     } else {
-      myMarker = L.marker(ev.latlng).bindPopup('<p>' + ev.latlng + '</p>').setZIndexOffset(999).addTo(map).openPopup();
+      myMarker = L.marker(ev.latlng).bindPopup('<p>' + ev.latlng + '</p>').setZIndexOffset(999).addTo(map); //.openPopup();
     }
     queryForLatLng(ev.latlng.lat, ev.latlng.lng);
 });
