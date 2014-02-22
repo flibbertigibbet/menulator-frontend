@@ -183,6 +183,7 @@ L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.pn
 
 function queryForLatLng(lat, lng) {
   console.log("queryForLatLng called");
+  map.setView([lat, lng], 14, {animate: true});
 }
 
 // try HTML5 geolocation
@@ -197,6 +198,7 @@ function onLocationFound(e) {
   } else {
     myMarker = L.marker(e.latlng).bindPopup('<p>' + e.latlng + '</p>').setZIndexOffset(99).addTo(map).openPopup();
   }
+  
   queryForLatLng(position.coords.latitude, position.coords.longitude);
 }
 
