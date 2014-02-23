@@ -86,7 +86,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="menuModalLabel">Menus</h4>
+        <h4 class="modal-title" id="menuModalLabel">Current Menu</h4>
       </div>
       <div id="menuModalBody" class="modal-body">
       </div>
@@ -138,6 +138,9 @@
 <div id='map' class="container"></div>
 
 <script>
+var qryRestUrl = "http://menulator.azurewebsites.net/api/"
+var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
+
 var myMarker, markerCol;
 var myIcon = L.icon({ iconUrl: 'restaurant.png', iconSize: [31,42] });
 var geoJsonFeature;
@@ -156,7 +159,6 @@ $('form').submit(function () {
   return false;
 });
 
-var qryRestUrl = "http://menulator.azurewebsites.net/api/location"
 var amQryRest = false;
 function searchRestaurants(searchStr) {
   if (amQryRest) return;
@@ -170,11 +172,9 @@ function searchRestaurants(searchStr) {
   restMarkerGroup.clearLayers();
   
   var aLatLng, aPhone;
-  
   var sidebarContent = '<h3>Results</h3><div class="panel panel-default"><div class="list-group" id="result-list">';
  
-  var searchUrl = qryRestUrl + (gotTxt != "" ? '/search/' + gotTxt : "");
-  console.log(searchUrl);
+  var searchUrl = qryRestUrl + 'location' + (gotTxt != "" ? '/search/' + gotTxt : "");
 
   $.ajax({url: searchUrl, dataType:'json', 
 	  error: function(xhr, status, error) {
@@ -186,9 +186,6 @@ function searchRestaurants(searchStr) {
       amQryRest = false;
     }
   }).done(function(data) {
-    console.log('done with search');
-    console.log(data);
-    
     markerCol = new Array();
     if (data.length == 0) {
       amQryRest = false;
@@ -207,7 +204,7 @@ function searchRestaurants(searchStr) {
           aPhone.slice(6);
       }
       sidebarContent += '<a href="javascript:void(0)" onclick="selectLoc(' + i.LocationID + ')" class="list-group-item">' + i.Title + '</a>';
-      var popupContent = '<p><b>' + i.Title + '</b> - <a href="javascript:void(0)" onclick="openMenusForLoc(' + i.LocationID + ')">Menus</a></p><p>' + i.Address +
+      var popupContent = '<p><b>' + i.Title + '</b> - <a href="javascript:void(0)" onclick="openMenusForLoc(' + i.LocationID + ')">Current Menu</a></p><p>' + i.Address +
         '</p><p>Phone: ' + aPhone + '</p>'
       var aMarker = L.marker(aLatLng, {icon: myIcon}).addTo(
         restMarkerGroup).bindPopup(popupContent);
@@ -226,9 +223,83 @@ function searchRestaurants(searchStr) {
   });
 }
 
+var amQryMenus = false;
 function openMenusForLoc(locID) {
+  if (amQryMenus) return;
+  
+  amQryMenus = true;
   sidebar.hide();
-  $('#menuModal').modal('show');
+  $('#menuModalLabel').empty();
+  $('#menuModalBody').empty();
+  
+  // get current menu from /menu/getcurrentmenu/[locID]
+  // then get menu items from /category/search/[menuID]
+  $('#menuModalBody').empty();
+  var menuContent = '<div class="panel panel-default"><div class="list-group" id="result-list">';
+  var searchUrl = qryRestUrl + 'menu/getcurrentMenu/' + locID.toString();
+  
+  $.ajax({url: searchUrl, dataType:'json', 
+	  error: function(xhr, status, error) {
+	    console.log('Oh dear.');
+      console.log(error);
+      console.log(xhr.statusText);
+      console.log(xhr.responseText);
+      menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+      $('#menuModalLabel').append('Current Menu');
+      $('#menuModalBody').append(menuContent + '</div>');
+      $('#menuModal').modal('show');
+      amQryMenus = false;
+      return true;
+    }
+  }).done(function(data) {
+    if (data.length == 0) {
+      menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+      $('#menuModalLabel').append('Current Menu');
+      $('#menuModalBody').append(menuContent + '</div>');
+      $('#menuModal').modal('show');
+      amQryMenus = false;
+      return true;
+    }
+    
+    // if got this far, have menu ID
+    var menuID = data.MenuID;
+    $('#menuModalLabel').append(data.Title);
+    
+    // now query for menu contents
+    searchUrl = qryRestUrl + 'category/search/' + menuID;
+  
+    $.ajax({url: searchUrl, dataType:'json', 
+	    error: function(xhr, status, error) {
+	      console.log('Oh dear.');
+        console.log(error);
+        console.log(xhr.statusText);
+        console.log(xhr.responseText);
+        menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+        $('#menuModalBody').append(menuContent + '</div>');
+        $('#menuModal').modal('show');
+        amQryMenus = false;
+        return true;
+      }
+    }).done(function(menu) {
+      if (menu.length == 0) {
+        menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+        $('#menuModalBody').append(menuContent + '</div>');
+        $('#menuModal').modal('show');
+        amQryMenus = false;
+        return true;
+      }
+      
+      // if got this far, have menu contents
+      $.each(menu, function(menu, i) {
+        console.log(i);
+        menuContent += '<li class="list-group-item">' + i.Name + ' - ' + 
+          i.Title + ' $' + i.Price + '</li>';
+      });
+      $('#menuModalBody').append(menuContent + '</div>');
+      $('#menuModal').modal('show');
+    });
+    amQryMenus = false;
+  });
 }
 
 function selectLoc(locID) {
@@ -237,8 +308,6 @@ function selectLoc(locID) {
   thisMarker.openPopup();
   map.setView(thisMarker.getLatLng(), 14, {animate: true});
 }
-
-var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
 
 var amQryAddr = false;
 function searchAddress(searchStr) {
