@@ -142,33 +142,9 @@ function searchRestaurants(searchStr) {
   // disable button while searching
 	$('#searchRest').prop('disabled', true);
 	console.log('search for restaurants with ' + gotTxt + ' now.');
-	
-	/*
-	// fetch all the things here
-	$.ajax({url: qryRestUrl, dataType:'json', 
-	  error: function(xhr, status, error) {
-	    console.log('Oh dear.');
-      console.log(error);
-      console.log(xhr.statusText);
-      console.log(xhr.responseText);
-      amQryRest = false;
-    }
-  }).done(function(data) {
-    console.log('done');
-    console.log(data);
-    $.each(data, function(data, i) {
-      console.log('restaurant name: ' + i.Title);
-      console.log('location: ' + i.Latitude + ', ' + i.Longitude);
-      console.log('phone: ' + i.Phone);
-      console.log('restaurant ID: ' + i.RestaurantID);
-      console.log('location ID: ' + i.LocationID);
-    });
-    amQryRest = false;
-  });
-  */
   
   sidebar.hide();
-  var sidebarContent = '<ul class="list-group" id="result-list">';
+  var sidebarContent = '<div class="panel panel-default"><div class="list-group" id="result-list">';
  
   $.ajax({url: qryRestUrl + '/search/' + gotTxt, dataType:'json', 
 	  error: function(xhr, status, error) {
@@ -176,11 +152,13 @@ function searchRestaurants(searchStr) {
       console.log(error);
       console.log(xhr.statusText);
       console.log(xhr.responseText);
+      sidebar.setContent('No results.');
       amQryRest = false;
     }
   }).done(function(data) {
     console.log('done with search');
     console.log(data);
+    
     $.each(data, function(data, i) {
       console.log('restaurant name: ' + i.Title);
       console.log('location: ' + i.Latitude + ', ' + i.Longitude);
@@ -188,10 +166,10 @@ function searchRestaurants(searchStr) {
       console.log('restaurant ID: ' + i.RestaurantID);
       console.log('location ID: ' + i.LocationID);
       
-      sidebarContent += '<li class="list-group-item">' + i.Title + '</li>';
+      sidebarContent += '<a href="#" class="list-group-item">' + i.Title + '</a>';
     });
     amQryRest = false;
-    sidebar.setContent(sidebarContent + '</ul>');
+    sidebar.setContent(sidebarContent + '</div>');
     sidebar.show();
   });
 }
