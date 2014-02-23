@@ -384,6 +384,7 @@
             var locStr = 'loc' + locID.toString();
             var thisMarker = markerCol[locStr];
             thisMarker.openPopup();
+            sidebar.hide();
             map.setView(thisMarker.getLatLng(), 14, { animate: true });
         }
 
