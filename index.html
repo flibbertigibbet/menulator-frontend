@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset=utf-8 />
@@ -152,7 +152,10 @@ function searchRestaurants(searchStr) {
   
   var sidebarContent = '<h3>Results</h3><div class="panel panel-default"><div class="list-group" id="result-list">';
  
-  $.ajax({url: qryRestUrl + '/search/' + gotTxt, dataType:'json', 
+  var searchUrl = qryRestUrl + (gotTxt != "" ? '/search/' + gotTxt : "");
+  console.log(searchUrl);
+
+  $.ajax({url: searchUrl, dataType:'json', 
 	  error: function(xhr, status, error) {
 	    console.log('Oh dear.');
       console.log(error);
@@ -194,7 +197,8 @@ function searchRestaurants(searchStr) {
     map.fitBounds(restMarkerGroup.getBounds());
     amQryRest = false;
     sidebar.setContent(sidebarContent + '</div>');
-    sidebar.show();
+    if (gotTxt != "")
+        sidebar.show();
   });
 }
 
@@ -289,6 +293,8 @@ map.addControl(sidebar);
 $( document ).ready( function() {
     map.locate({setView: true, maxZoom: 16, timeout: 3000});
     restMarkerGroup.addTo(map);
+    //console.log(map.locate().locStr());
+    searchRestaurants();
 });
 
 function onLocationFound(e) {
@@ -325,6 +331,7 @@ $(document).ajaxStart(function() {
 }).ajaxStop(function() {
   $('#loading').hide();
 });
+
 </script>
 </body>
 </html>
