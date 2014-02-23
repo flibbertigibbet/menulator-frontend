@@ -296,19 +296,23 @@ function openMenusForLoc(locID) {
       var cat = "";
       $.each(menu, function(menu, i) {
         // TODO:  add i.Description somewhere
-        //menuContent += '<li class="list-group-item">' + i.Name + ' - ' + 
-        //  i.Title + '<span class="badge pull-right">$' + i.Price + '</span></li>';
         
         lastCat = cat;
         cat = i.CategoryID;
         
         if (cat == lastCat) {
-          menuContent += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#item' + i.ItemID + '">' + i.Name + '</a></h4></div><div id="item' + i.ItemID + '" class="panel-collapse collapse"><div class="panel-body"><p>' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></p></div></div></div>';
+          // add item to category
+          menuContent += '<li class="list-group-item">' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></li>';
         } else {
-          menuContent += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#item' + i.ItemID + '">' + i.Name + '</a></h4></div><div id="item' + i.ItemID + '" class="panel-collapse collapse"><div class="panel-body"><p>' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></p></div></div></div>';
+          // close last category
+          if (lastCat != "") {
+            menuContent += '</ul></div></div></div>';
+           }
+          // add category
+          menuContent += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#cat' + cat + '">' + i.Name + '</a></h4></div><div id="cat' + cat + '" class="panel-collapse collapse"><div class="panel-body"><ul class="list-group"><li class="list-group-item"><p>' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></p><p><em>' + i.Description + '</em></p></li>';
         }
       });
-      $('#menuModalBody').append(menuContent + '</div>');
+      $('#menuModalBody').append(menuContent + '</ul></div></div></div></div>');
       $('#menuModal').modal('show');
     });
     amQryMenus = false;
