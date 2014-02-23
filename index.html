@@ -128,6 +128,7 @@ var map = L.map('map', {
     minZoom: 3,
   }
 }).setView([39.5, -98.35], 4).setMaxBounds([[17,-130],[56,-61]]);
+var restMarkerGroup = new L.layerGroup();
 
 $('form').submit(function () {
   return false;
@@ -144,7 +145,11 @@ function searchRestaurants(searchStr) {
 	console.log('search for restaurants with ' + gotTxt + ' now.');
   
   sidebar.hide();
-  var sidebarContent = '<div class="panel panel-default"><div class="list-group" id="result-list">';
+  restMarkerGroup.clearLayers();
+  
+  var aMarker, aLatLng;
+  
+  var sidebarContent = '<h3>Results</h3><div class="panel panel-default"><div class="list-group" id="result-list">';
  
   $.ajax({url: qryRestUrl + '/search/' + gotTxt, dataType:'json', 
 	  error: function(xhr, status, error) {
@@ -152,12 +157,19 @@ function searchRestaurants(searchStr) {
       console.log(error);
       console.log(xhr.statusText);
       console.log(xhr.responseText);
-      sidebar.setContent('No results.');
+      sidebar.setContent('<h3>Error Searching</h3>');
       amQryRest = false;
     }
   }).done(function(data) {
     console.log('done with search');
     console.log(data);
+    
+    if (data.length == 0) {
+      amQryRest = false;
+      sidebar.setContent('<h3>No Results</h3>');
+      sidebar.show();
+      return true;
+    }
     
     $.each(data, function(data, i) {
       console.log('restaurant name: ' + i.Title);
@@ -167,6 +179,9 @@ function searchRestaurants(searchStr) {
       console.log('location ID: ' + i.LocationID);
       
       sidebarContent += '<a href="#" class="list-group-item">' + i.Title + '</a>';
+      aLatLng = L.latLng(i.Longitude, i.Latitude); // TODO: backward from server
+      aMarker = L.marker(aLatLng).addTo(restMarkerGroup).bindPopup(i.Title);
+      console.log(aMarker);
     });
     amQryRest = false;
     sidebar.setContent(sidebarContent + '</div>');
@@ -255,6 +270,7 @@ map.addControl(sidebar);
 // try HTML5 geolocation
 $( document ).ready( function() {
     map.locate({setView: true, maxZoom: 16, timeout: 3000});
+    restMarkerGroup.addTo(map);
 });
 
 function onLocationFound(e) {
