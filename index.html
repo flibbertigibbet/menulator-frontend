@@ -112,7 +112,7 @@
 </div>
 
 <div id="sidebar">
-    <h1>leaflet-sidebar</h1>
+    <h2>Search Results</h2>
 </div>
 
 <div id='map' class="container"></div>
@@ -167,8 +167,10 @@ function searchRestaurants(searchStr) {
   });
   */
   
+  sidebar.hide();
+  var sidebarContent = '<ul id="result-list">';
+ 
   $.ajax({url: qryRestUrl + '/search/' + gotTxt, dataType:'json', 
-    async: false,
 	  error: function(xhr, status, error) {
 	    console.log('Oh dear.');
       console.log(error);
@@ -179,15 +181,18 @@ function searchRestaurants(searchStr) {
   }).done(function(data) {
     console.log('done with search');
     console.log(data);
-    sidebar.show();
     $.each(data, function(data, i) {
       console.log('restaurant name: ' + i.Title);
       console.log('location: ' + i.Latitude + ', ' + i.Longitude);
       console.log('phone: ' + i.Phone);
       console.log('restaurant ID: ' + i.RestaurantID);
       console.log('location ID: ' + i.LocationID);
+      
+      sidebarContent += '<li>' + i.Title + '</li>';
     });
     amQryRest = false;
+    sidebar.setContent(sidebarContent + '</ul>');
+    sidebar.show();
   });
 }
 
