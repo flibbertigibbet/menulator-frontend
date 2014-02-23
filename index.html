@@ -168,7 +168,7 @@ function searchRestaurants(searchStr) {
   */
   
   sidebar.hide();
-  var sidebarContent = '<ul id="result-list">';
+  var sidebarContent = '<ul class="list-group" id="result-list">';
  
   $.ajax({url: qryRestUrl + '/search/' + gotTxt, dataType:'json', 
 	  error: function(xhr, status, error) {
@@ -188,7 +188,7 @@ function searchRestaurants(searchStr) {
       console.log('restaurant ID: ' + i.RestaurantID);
       console.log('location ID: ' + i.LocationID);
       
-      sidebarContent += '<li>' + i.Title + '</li>';
+      sidebarContent += '<li class="list-group-item">' + i.Title + '</li>';
     });
     amQryRest = false;
     sidebar.setContent(sidebarContent + '</ul>');
