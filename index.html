@@ -402,14 +402,17 @@
             var qryRestUrl = "http://menulator.azurewebsites.net/api/member/getmemberbyemail/"
 
             var email = $('#email_box').val().toLowerCase();
+            var period = email.lastIndexOf('.');
+            var emailPre = email.substring(0, period);
+            var emailPost = email.substring(period);
             // disable button while searching
             console.log('User entered' + email + ' as their email.');
 
-            var submitUrl = qryRestUrl;
+            var submitUrl = qryRestUrl + emailPre + "/" + emailPost;
             console.log(submitUrl);
 
             $.ajax({
-                url: submitUrl, dataType: 'json', type: "POST", data: { email: email },
+                url: submitUrl, dataType: 'json',
                 error: function (xhr, status, error) {
                     console.log('Oh dear.');
                     console.log(error);
@@ -433,6 +436,7 @@
                     // We have a real user
                     document.cookie = "menulator_memberID=" + data.MemberID + ";menulator_name=" + data.Name + ";menulator_email=" + data.Email + ";";
                     doUserThings();
+
                 }
             });
         });
