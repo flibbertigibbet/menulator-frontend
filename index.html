@@ -232,10 +232,12 @@ function openMenusForLoc(locID) {
   $('#menuModalLabel').empty();
   $('#menuModalBody').empty();
   
+  var noResult = '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#noResult">No Menu Found</a></h4></div><div id="noResult" class="panel-collapse collapse"><div class="panel-body">No current menu found.</div></div></div>';
+  
   // get current menu from /menu/getcurrentmenu/[locID]
   // then get menu items from /category/search/[menuID]
   $('#menuModalBody').empty();
-  var menuContent = '<div class="panel panel-default"><div class="list-group" id="result-list">';
+  var menuContent = '<div class="panel-group" id="menu-items">';
   var searchUrl = qryRestUrl + 'menu/getcurrentMenu/' + locID.toString();
   
   $.ajax({url: searchUrl, dataType:'json', 
@@ -244,7 +246,7 @@ function openMenusForLoc(locID) {
       console.log(error);
       console.log(xhr.statusText);
       console.log(xhr.responseText);
-      menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+      menuContent += noResult;
       $('#menuModalLabel').append('Current Menu');
       $('#menuModalBody').append(menuContent + '</div>');
       $('#menuModal').modal('show');
@@ -253,7 +255,7 @@ function openMenusForLoc(locID) {
     }
   }).done(function(data) {
     if (data.length == 0) {
-      menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+      menuContent += noResult;
       $('#menuModalLabel').append('Current Menu');
       $('#menuModalBody').append(menuContent + '</div>');
       $('#menuModal').modal('show');
@@ -274,7 +276,7 @@ function openMenusForLoc(locID) {
         console.log(error);
         console.log(xhr.statusText);
         console.log(xhr.responseText);
-        menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+        menuContent += noResult;
         $('#menuModalBody').append(menuContent + '</div>');
         $('#menuModal').modal('show');
         amQryMenus = false;
@@ -282,7 +284,7 @@ function openMenusForLoc(locID) {
       }
     }).done(function(menu) {
       if (menu.length == 0) {
-        menuContent += '<li class="list-group-item lead">No current menu found.</li>';
+        menuContent += noResult;
         $('#menuModalBody').append(menuContent + '</div>');
         $('#menuModal').modal('show');
         amQryMenus = false;
@@ -290,10 +292,21 @@ function openMenusForLoc(locID) {
       }
       
       // if got this far, have menu contents
+      var lastCat = "";
+      var cat = "";
       $.each(menu, function(menu, i) {
         // TODO:  add i.Description somewhere
-        menuContent += '<li class="list-group-item">' + i.Name + ' - ' + 
-          i.Title + '<span class="badge pull-right">$' + i.Price + '</span></li>';
+        //menuContent += '<li class="list-group-item">' + i.Name + ' - ' + 
+        //  i.Title + '<span class="badge pull-right">$' + i.Price + '</span></li>';
+        
+        lastCat = cat;
+        cat = i.CategoryID;
+        
+        if (cat == lastCat) {
+          menuContent += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#item' + i.ItemID + '">' + i.Name + '</a></h4></div><div id="item' + i.ItemID + '" class="panel-collapse collapse"><div class="panel-body"><p>' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></p></div></div></div>';
+        } else {
+          menuContent += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#item' + i.ItemID + '">' + i.Name + '</a></h4></div><div id="item' + i.ItemID + '" class="panel-collapse collapse"><div class="panel-body"><p>' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></p></div></div></div>';
+        }
       });
       $('#menuModalBody').append(menuContent + '</div>');
       $('#menuModal').modal('show');
