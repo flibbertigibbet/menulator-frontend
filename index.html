@@ -175,10 +175,12 @@ function searchRestaurants(searchStr) {
     
     $.each(data, function(data, i) {
       aLatLng = L.latLng(i.Latitude, i.Longitude);
+      
+      // format phone number with parens and hyphen
       var aPhone = i.Phone;
       if (aPhone.length == 10) {
         aPhone = '(' + aPhone.slice(0, 3) + ') ' + aPhone.slice(3, 6) + '-' +
-          aPhone.slice(6); // TODO: format with parens and hyphen
+          aPhone.slice(6);
       }
       sidebarContent += '<a href="javascript:void(0)" onclick="selectLoc(' + i.LocationID + ')" class="list-group-item">' + i.Title + '</a>';
       var popupContent = '<p><b>' + i.Title + '</b></p><p>' + i.Address +
@@ -187,7 +189,6 @@ function searchRestaurants(searchStr) {
         restMarkerGroup).bindPopup(popupContent);
       var locID = 'loc' + i.LocationID.toString();
       markerCol[locID] = aMarker;
-      //markerCol.push( { i.LocationID : aMarker } );
     });
     map.fitBounds(restMarkerGroup.getBounds());
     amQryRest = false;
