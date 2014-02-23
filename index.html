@@ -274,8 +274,8 @@ function gotAddress(response) {
 L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', { attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.' }).addTo(map);
 
 function queryForLatLng(lat, lng) {
-  console.log("queryForLatLng called");
   map.setView([lat, lng], 14, {animate: true});
+  $('#loading').hide();
 }
 
 // add sidebar
@@ -294,9 +294,9 @@ $( document ).ready( function() {
 function onLocationFound(e) {
   console.log('got position.');
   if (myMarker) {  
-    myMarker.setLatLng(e.latlng).setZIndexOffset(99).setPopupContent('<p>' + ev.latlng + '</p>').update().openPopup();
+    myMarker.setLatLng(e.latlng).setZIndexOffset(99).setPopupContent('<p>' + ev.latlng + '</p>').update();
   } else {
-    myMarker = L.marker(e.latlng).bindPopup('<p>' + e.latlng + '</p>').setZIndexOffset(99).addTo(map).openPopup();
+    myMarker = L.marker(e.latlng).bindPopup('<p>' + e.latlng + '</p>').setZIndexOffset(99).addTo(map);
   }
   
   queryForLatLng(e.latlng.lat, e.latlng.lng);
