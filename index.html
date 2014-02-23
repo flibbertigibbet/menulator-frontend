@@ -122,6 +122,7 @@ var myMarker, markerCol;
 var myIcon = L.icon({ iconUrl: 'restaurant.png', iconSize: [31,42] });
 var geoJsonFeature;
 var ui = document.getElementById('map-ui');
+var geoAllowed;
 var map = L.map('map', {
   tileLayer: {
     detectRetina: true,
@@ -199,6 +200,8 @@ function searchRestaurants(searchStr) {
         map.fitBounds(restMarkerGroup.getBounds());
         sidebar.show();
     }
+    if (gotTxt == "" && !geoAllowed)
+        map.fitBounds(restMarkerGroup.getBounds());
   });
 }
 
@@ -291,14 +294,15 @@ map.addControl(sidebar);
 
 // try HTML5 geolocation
 $(document).ready(function () {
-    searchRestaurants();
     map.locate({ setView: true, maxZoom: 16, timeout: 5000 });
     restMarkerGroup.addTo(map);
+    searchRestaurants();
     //console.log(map.locate().locStr());
 });
 
 function onLocationFound(e) {
-  console.log('got position.');
+    console.log('got position.');
+    geoAllowed = true;
   if (myMarker) {  
     myMarker.setLatLng(e.latlng).setZIndexOffset(99).setPopupContent('<p>' + ev.latlng + '</p>').update();
   } else {
@@ -312,7 +316,9 @@ map.on('locationfound', onLocationFound);
 
 function onLocationError(e) {
     console.log(e.message);
+    geoAllowed = false;
     $('#loading').hide();
+
 }
 
 map.on('locationerror', onLocationError);
