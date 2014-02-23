@@ -193,11 +193,13 @@ function searchRestaurants(searchStr) {
       var locID = 'loc' + i.LocationID.toString();
       markerCol[locID] = aMarker;
     });
-    map.fitBounds(restMarkerGroup.getBounds());
+    
     amQryRest = false;
     sidebar.setContent(sidebarContent + '</div>');
-    if (gotTxt != "")
+    if (gotTxt != "") {
+        map.fitBounds(restMarkerGroup.getBounds());
         sidebar.show();
+    }
   });
 }
 
@@ -289,11 +291,11 @@ var sidebar = L.control.sidebar('sidebar', {
 map.addControl(sidebar);
 
 // try HTML5 geolocation
-$( document ).ready( function() {
-    map.locate({setView: true, maxZoom: 16, timeout: 3000});
+$(document).ready(function () {
+    searchRestaurants();
+    map.locate({ setView: true, maxZoom: 16, timeout: 5000 });
     restMarkerGroup.addTo(map);
     //console.log(map.locate().locStr());
-    searchRestaurants();
 });
 
 function onLocationFound(e) {
