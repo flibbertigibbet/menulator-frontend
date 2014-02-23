@@ -293,7 +293,7 @@ function openMenusForLoc(locID) {
       $.each(menu, function(menu, i) {
         // TODO:  add i.Description somewhere
         menuContent += '<li class="list-group-item">' + i.Name + ' - ' + 
-          i.Title + '<span class="pull-right">$' + i.Price + '</span></li>';
+          i.Title + '<span class="badge pull-right">$' + i.Price + '</span></li>';
       });
       $('#menuModalBody').append(menuContent + '</div>');
       $('#menuModal').modal('show');
