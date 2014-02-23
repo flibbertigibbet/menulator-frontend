@@ -109,20 +109,23 @@
 		  <a class="navbar-brand" data-toggle="modal" href="#" data-target="#aboutModal">Menulator</a>
 	</div>
 	<div class="navbar-collapse collapse" id="my-navbar-collapse">
+	  <ul class="nav navbar-nav navbar-right"><li>
 			<form role="form-addr" class="navbar-form navbar-left" onsubmit="return searchAddress(this)">
 			  <div class="input-group search-container">
 				<input id="enteredAddr" type="text" class="form-control" placeholder="Enter address"> 
 				  <div id="searchAddr" class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button></div>
 				  </div>
-			</form>
-			<form role="form-rest" class="navbar-form navbar-right" 
+			</form></li><li>
+			<form role="form-rest" class="navbar-form" 
 			  onsubmit="return searchRestaurants(this)">
 			  <div class="input-group search-container">
 				<input id="enteredRest" type="text" class="form-control" placeholder="Restaurant search"> 
 				  <div id="searchRest" class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button></div>
 				  </div>
-			  </div>
-			</form>
+			</form></li>
+			<li class="active">
+			<a class="btn button-default" href="javascript:void(0)" onclick="sidebar.toggle()"><span class="glyphicon glyphicon-hand-right"></span></a></li></ul>
+			</div>
 	  </div>
 	</div>
 </div>
