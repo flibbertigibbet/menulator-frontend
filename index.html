@@ -204,7 +204,7 @@ function searchRestaurants(searchStr) {
           aPhone.slice(6);
       }
       sidebarContent += '<a href="javascript:void(0)" onclick="selectLoc(' + i.LocationID + ')" class="list-group-item">' + i.Title + '</a>';
-      var popupContent = '<p><b>' + i.Title + '</b></p><p>' + i.Address +
+      var popupContent = '<p><b>' + i.Title + '</b> - <a href="javascript:void(0)" onclick="openMenusForLoc(' + i.LocationID + ')">Menus</a></p><p>' + i.Address +
         '</p><p>Phone: ' + aPhone + '</p>'
       var aMarker = L.marker(aLatLng, {icon: myIcon}).addTo(
         restMarkerGroup).bindPopup(popupContent);
@@ -223,9 +223,12 @@ function searchRestaurants(searchStr) {
   });
 }
 
+function openMenusForLoc(locID) {
+  sidebar.hide();
+  $('#menuModal').modal('show');
+}
+
 function selectLoc(locID) {
-  console.log(locID);
-  console.log(markerCol);
   var locStr = 'loc' + locID.toString();  
   var thisMarker = markerCol[ locStr ];
   thisMarker.openPopup();
