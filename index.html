@@ -1,20 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset=utf-8 />
-    <title>Menulator</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-    <link rel="stylesheet" type="text/css" href="css/animation.css">
-    <link rel="stylesheet" type="text/css" href="css/L.Control.Sidebar.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-    <script type="text/javascript" src="js/L.Control.Sidebar.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <style>
+<meta charset=utf-8 />
+<title>Menulator</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <link rel="stylesheet" type="text/css" href="css/animation.css">
+  <link rel="stylesheet" type="text/css" href="css/L.Control.Sidebar.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  <script type="text/javascript" src="js/L.Control.Sidebar.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.4"></script>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<style>
         html, body, #map {
             height: 100%;
             width: 100%;
@@ -41,14 +41,14 @@
             overflow: hidden;
         }
 
-        #searchbox {
-            -webkit-border-top-left-radius: 4px;
-            -webkit-border-bottom-left-radius: 4px;
-            -moz-border-top-left-radius: 4px;
-            -moz-border-bottom-left-radius: 4px;
-            border-top-left-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
+    #searchbox {
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
+      -moz-border-top-left-radius: 4px;
+      -moz-border-bottom-left-radius: 4px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
 
         .search-container {
             width: 400px;
@@ -65,34 +65,34 @@
                 width: 100%;
             }
         }
-    </style>
+  </style>
 </head>
 <body>
-    <!-- loading animation -->
-    <div id="loading">
-        <div class="bubblingG">
-            <span id="bubblingG_1"></span>
-            <span id="bubblingG_2"></span>
-            <span id="bubblingG_3"></span>
-        </div>
-    </div>
-    <!-- About modal -->
-    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="aboutModalLabel">Menulator</h4>
-                </div>
-                <div id="aboutModalBody" class="modal-body">
-                    <p>Menulator project for <a target="_blank" href="http://phillycodefest.com/">Philly Codefest 2014</a>.</p><p>To zoom to a point on the map, right-click or long-press the spot.  To zoom to an address, enter it into the address search bar.  Address lookup provided by OpenStreetMap's <a target="_blank" href="http://nominatim.openstreetmap.org/">Nominatim geocoder</a>.</p><p>To search for a restaurant, enter your search term into the restaurant search box.  You can search by restauant name, type of cuisine, or other tags.</p><p>Source is <a target="_blank" href="https://github.com/flibbertigibbet/menulator-frontend">on GitHub</a>.</p><p><a target="_blank" href="https://twitter.com/banderkat">@Banderkat</a></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+<!-- loading animation -->
+<div id="loading">
+  <div class="bubblingG">
+    <span id="bubblingG_1"></span>
+    <span id="bubblingG_2"></span>
+    <span id="bubblingG_3"></span>
+  </div>
+</div>
+<!-- About modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="aboutModalLabel">Menulator</h4>
+      </div>
+      <div id="aboutModalBody" class="modal-body">
+        <p>Menulator project for <a target="_blank" href="http://phillycodefest.com/">Philly Codefest 2014</a>.</p><p>To zoom to a point on the map, right-click or long-press the spot.  To zoom to an address, enter it into the address search bar.  Address lookup provided by OpenStreetMap's <a target="_blank" href="http://nominatim.openstreetmap.org/">Nominatim geocoder</a>.</p><p>To search for a restaurant, enter your search term into the restaurant search box.  You can search by restauant name, type of cuisine, or other tags.</p><p>Source is <a target="_blank" href="https://github.com/flibbertigibbet/menulator-frontend">on GitHub</a>.</p><p><a target="_blank" href="https://twitter.com/banderkat">@Banderkat</a></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
     <!-- Login modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -112,291 +112,402 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">No results found</h4>
-                </div>
-                <div id="myModalBody" class="modal-body">
-                    No results found for address search.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">No results found</h4>
+      </div>
+      <div id="myModalBody" class="modal-body">
+        No results found for address search.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+        
+<!-- Menu Modal -->
+<div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="menuModalLabel">Current Menu</h4>
+      </div>
+      <div id="menuModalBody" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+        
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="container-fluid">
             <div id="controls" class="navbar-header">
                 <span>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" data-toggle="modal" href="#" data-target="#aboutModal">Menulator</a>
-                    <span id="userInfo" class="navbar-left navbar-brand" style="font-size: 15px;"><a class="navbar-left navbar-brand" style="font-size: 15px;" data-toggle="modal" href="#" data-target="#loginModal">Login</a></span>
-            </div>
-            <div class="navbar-collapse collapse" id="my-navbar-collapse">
-                <form role="form-addr" class="navbar-form navbar-left" onsubmit="return searchAddress(this)">
-                    <div class="input-group search-container">
-                        <input id="enteredAddr" type="text" class="form-control" placeholder="Enter address">
-                        <div id="searchAddr" class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button></div>
-                    </div>
-                </form>
-                <form role="form-rest" class="navbar-form navbar-right"
-                      onsubmit="return searchRestaurants(this)">
-                    <div class="input-group search-container">
-                        <input id="enteredRest" type="text" class="form-control" placeholder="Restaurant search">
-                        <div id="searchRest" class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button></div>
-                    </div>
-            </div>
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#my-navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+		  <a class="navbar-brand" data-toggle="modal" href="#" data-target="#aboutModal">Menulator</a>
+                    <span id="userInfo" class="navbar-left navbar-brand" style="font-size: 15px;"><a data-toggle="modal" href="#" data-target="#loginModal">Login</a></span>
+	</div>
+	<div class="navbar-collapse collapse" id="my-navbar-collapse">
+	  <ul class="nav navbar-nav navbar-right"><li>
+			<form role="form-addr" class="navbar-form navbar-left" onsubmit="return searchAddress(this)">
+			  <div class="input-group search-container">
+				<input id="enteredAddr" type="text" class="form-control" placeholder="Enter address"> 
+				  <div id="searchAddr" class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button></div>
+				  </div>
+			</form></li><li>
+			<form role="form-rest" class="navbar-form" 
+			  onsubmit="return searchRestaurants(this)">
+			  <div class="input-group search-container">
+				<input id="enteredRest" type="text" class="form-control" placeholder="Restaurant search"> 
+				  <div id="searchRest" class="input-group-btn"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button></div>
+				  </div>
+			</form></li>
+			<li class="active">
+			<a class="btn button-default" href="javascript:void(0)" onclick="sidebar.toggle()"><span class="glyphicon glyphicon-hand-right"></span></a></li></ul>
+			  </div>
+	  </div>
+	</div>
+</div>
+</div>
 
-            </form>
-        </div>
-    </div>
-    </div>
-    </div>
+<div id="sidebar">
+    <h2>Search Results</h2>
+</div>
+<div id='map' class="container"></div>
+<script>
+var qryRestUrl = "http://menulator.azurewebsites.net/api/"
+var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
 
-    <div id="sidebar">
-        <h2>Search Results</h2>
-    </div>
-    <div id='map' class="container"></div>
-    <script>
-        var myMarker, markerCol;
+var myMarker, markerCol;
         var myIcon = L.icon({ iconUrl: 'restaurant.png', iconSize: [31, 42] });
-        var geoJsonFeature;
-        var ui = document.getElementById('map-ui');
-        var geoAllowed = true;
-        var map = L.map('map', {
-            tileLayer: {
-                detectRetina: true,
-                maxZoom: 14,
-                minZoom: 3,
-            }
+var geoJsonFeature;
+var ui = document.getElementById('map-ui');
+var geoAllowed = true;
+var map = L.map('map', {
+  tileLayer: {
+    detectRetina: true,
+    maxZoom: 14,
+    minZoom: 3,
+  }
         }).setView([39.5, -98.35], 4).setMaxBounds([[17, -130], [56, -61]]);
-        var restMarkerGroup = new L.featureGroup();
+var restMarkerGroup = new L.featureGroup();
 
-        $('form').submit(function () {
-            return false;
-        });
+$('form').submit(function () {
+  return false;
+});
 
-        var qryRestUrl = "http://menulator.azurewebsites.net/api/location"
-        var amQryRest = false;
-        function searchRestaurants(searchStr) {
-            if (amQryRest) return;
-            amQryRest = true;
-            var gotTxt = $('#enteredRest').val();
-            // disable button while searching
-            $('#searchRest').prop('disabled', true);
-            console.log('search for restaurants with ' + gotTxt + ' now.');
-
-            sidebar.hide();
-            restMarkerGroup.clearLayers();
-
-            var aLatLng, aPhone;
-
-            var sidebarContent = '<h3>Results</h3><div class="panel panel-default"><div class="list-group" id="result-list">';
-
-            var searchUrl = qryRestUrl + (gotTxt != "" ? '/search/' + gotTxt : "");
-            console.log(searchUrl);
+var amQryRest = false;
+function searchRestaurants(searchStr) {
+  if (amQryRest) return;
+  amQryRest = true;
+  var gotTxt = $('#enteredRest').val();
+  // disable button while searching
+	$('#searchRest').prop('disabled', true);
+	console.log('search for restaurants with ' + gotTxt + ' now.');
+  
+  sidebar.hide();
+  restMarkerGroup.clearLayers();
+  
+  var aLatLng, aPhone;
+  var sidebarContent = '<h3>Results</h3><div class="panel panel-default"><div class="list-group" id="result-list">';
+ 
+  var searchUrl = qryRestUrl + 'location' + (gotTxt != "" ? '/search/' + gotTxt : "");
 
             $.ajax({
                 url: searchUrl, dataType: 'json',
                 error: function (xhr, status, error) {
-                    console.log('Oh dear.');
-                    console.log(error);
-                    console.log(xhr.statusText);
-                    console.log(xhr.responseText);
-                    sidebar.setContent('<h3>Error Searching</h3>');
-                    amQryRest = false;
-                }
-            }).done(function (data) {
-                console.log('done with search');
-                console.log(data);
-
-                markerCol = new Array();
-                if (data.length == 0) {
-                    amQryRest = false;
-                    sidebar.setContent('<h3>No Results</h3>');
-                    sidebar.show();
-                    return true;
-                }
-
+	    console.log('Oh dear.');
+      console.log(error);
+      console.log(xhr.statusText);
+      console.log(xhr.responseText);
+      sidebar.setContent('<h3>Error Searching</h3>');
+      amQryRest = false;
+    }
+  }).done(function(data) {
+    console.log('done with search');
+    console.log(data);
+    
+    markerCol = new Array();
+    if (data.length == 0) {
+      amQryRest = false;
+      sidebar.setContent('<h3>No Results</h3>');
+      sidebar.show();
+      return true;
+    }
+    
                 $.each(data, function (data, i) {
-                    aLatLng = L.latLng(i.Latitude, i.Longitude);
-
-                    // format phone number with parens and hyphen
-                    var aPhone = i.Phone;
-                    if (aPhone.length == 10) {
-                        aPhone = '(' + aPhone.slice(0, 3) + ') ' + aPhone.slice(3, 6) + '-' +
-                          aPhone.slice(6);
-                    }
-                    sidebarContent += '<a href="javascript:void(0)" onclick="selectLoc(' + i.LocationID + ')" class="list-group-item">' + i.Title + '</a>';
-                    var popupContent = '<p><b>' + i.Title + '</b></p><p>' + i.Address +
-                      '</p><p>Phone: ' + aPhone + '</p>'
+      aLatLng = L.latLng(i.Latitude, i.Longitude);
+      
+      // format phone number with parens and hyphen
+      var aPhone = i.Phone;
+      if (aPhone.length == 10) {
+        aPhone = '(' + aPhone.slice(0, 3) + ') ' + aPhone.slice(3, 6) + '-' +
+          aPhone.slice(6);
+      }
+      sidebarContent += '<a href="javascript:void(0)" onclick="selectLoc(' + i.LocationID + ')" class="list-group-item">' + i.Title + '</a>';
+      var popupContent = '<p><b>' + i.Title + '</b> - <a href="javascript:void(0)" onclick="openMenusForLoc(' + i.LocationID + ')">Current Menu</a></p><p>' + i.Address +
+        '</p><p>Phone: ' + aPhone + '</p>'
                     var aMarker = L.marker(aLatLng, { icon: myIcon }).addTo(
-                      restMarkerGroup).bindPopup(popupContent);
-                    var locID = 'loc' + i.LocationID.toString();
-                    markerCol[locID] = aMarker;
-                });
+        restMarkerGroup).bindPopup(popupContent);
+      var locID = 'loc' + i.LocationID.toString();
+      markerCol[locID] = aMarker;
+    });
+    
+    amQryRest = false;
+    sidebar.setContent(sidebarContent + '</div>');
+    if (gotTxt != "") {
+        map.fitBounds(restMarkerGroup.getBounds());
+        sidebar.show();
+    }
+    if (gotTxt == "" && !geoAllowed)
+        map.fitBounds(restMarkerGroup.getBounds());
+  });
+}
 
-                amQryRest = false;
-                sidebar.setContent(sidebarContent + '</div>');
-                if (gotTxt != "") {
-                    map.fitBounds(restMarkerGroup.getBounds());
-                    sidebar.show();
-                }
-                if (gotTxt == "" && !geoAllowed)
-                    map.fitBounds(restMarkerGroup.getBounds());
-            });
+var amQryMenus = false;
+function openMenusForLoc(locID) {
+  if (amQryMenus) return;
+  
+  amQryMenus = true;
+  sidebar.hide();
+  $('#menuModalLabel').empty();
+  $('#menuModalBody').empty();
+  
+  var noResult = '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#noResult">No Menu Found</a></h4></div><div id="noResult" class="panel-collapse collapse"><div class="panel-body">No current menu found.</div></div></div>';
+  
+  // get current menu from /menu/getcurrentmenu/[locID]
+  // then get menu items from /category/search/[menuID]
+  $('#menuModalBody').empty();
+  var menuContent = '<div class="panel-group" id="menu-items">';
+  var searchUrl = qryRestUrl + 'menu/getcurrentMenu/' + locID.toString();
+  
+  $.ajax({url: searchUrl, dataType:'json', 
+	  error: function(xhr, status, error) {
+	    console.log('Oh dear.');
+      console.log(error);
+      console.log(xhr.statusText);
+      console.log(xhr.responseText);
+      menuContent += noResult;
+      $('#menuModalLabel').append('Current Menu');
+      $('#menuModalBody').append(menuContent + '</div>');
+      $('#menuModal').modal('show');
+      amQryMenus = false;
+      return true;
+    }
+  }).done(function(data) {
+    if (data.length == 0) {
+      menuContent += noResult;
+      $('#menuModalLabel').append('Current Menu');
+      $('#menuModalBody').append(menuContent + '</div>');
+      $('#menuModal').modal('show');
+      amQryMenus = false;
+      return true;
+    }
+    
+    // if got this far, have menu ID
+    var menuID = data.MenuID;
+    $('#menuModalLabel').append(data.Title);
+    
+    // now query for menu contents
+    searchUrl = qryRestUrl + 'category/search/' + menuID;
+  
+    $.ajax({url: searchUrl, dataType:'json', 
+	    error: function(xhr, status, error) {
+	      console.log('Oh dear.');
+        console.log(error);
+        console.log(xhr.statusText);
+        console.log(xhr.responseText);
+        menuContent += noResult;
+        $('#menuModalBody').append(menuContent + '</div>');
+        $('#menuModal').modal('show');
+        amQryMenus = false;
+        return true;
+      }
+    }).done(function(menu) {
+      if (menu.length == 0) {
+        menuContent += noResult;
+        $('#menuModalBody').append(menuContent + '</div>');
+        $('#menuModal').modal('show');
+        amQryMenus = false;
+        return true;
+      }
+      
+      // if got this far, have menu contents
+      var lastCat = "";
+      var cat = "";
+      $.each(menu, function(menu, i) {
+        // TODO:  add i.Description somewhere
+        
+        lastCat = cat;
+        cat = i.CategoryID;
+        
+        if (cat == lastCat) {
+          // add item to category
+          menuContent += '<li class="list-group-item">' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></li>';
+        } else {
+          // close last category
+          if (lastCat != "") {
+            menuContent += '</ul></div></div></div>';
+           }
+          // add category
+          menuContent += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title lead"><a data-toggle="collapse" data-parent="#menu-items" href="#cat' + cat + '">' + i.Name + '</a></h4></div><div id="cat' + cat + '" class="panel-collapse collapse"><div class="panel-body"><ul class="list-group"><li class="list-group-item"><p>' + i.Name + ' - ' + i.Title + '<span class="badge pull-right">$' + i.Price + '</span></p><p><em>' + i.Description + '</em></p></li>';
         }
+      });
+      $('#menuModalBody').append(menuContent + '</ul></div></div></div></div>');
+      $('#menuModal').modal('show');
+    });
+    amQryMenus = false;
+  });
+}
 
-        function selectLoc(locID) {
-            console.log(locID);
-            console.log(markerCol);
-            var locStr = 'loc' + locID.toString();
+function selectLoc(locID) {
+  var locStr = 'loc' + locID.toString();  
             var thisMarker = markerCol[locStr];
-            thisMarker.openPopup();
+  thisMarker.openPopup();
             map.setView(thisMarker.getLatLng(), 14, { animate: true });
-        }
+}
 
-        var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
-
-        var amQryAddr = false;
-        function searchAddress(searchStr) {
-            if (amQryAddr) return;
-            amQryAddr = true;
-            var gotTxt = $('#enteredAddr').val();
-            // disable button while searching
-            $('#searchAddr').prop('disabled', true);
+var amQryAddr = false;
+function searchAddress(searchStr) {
+  if (amQryAddr) return;
+  amQryAddr = true;
+	var gotTxt = $('#enteredAddr').val();
+	// disable button while searching
+	$('#searchAddr').prop('disabled', true);
             $.ajax({
                 url: qryAddrUrl, data: { 'q': gotTxt }, dataType: 'jsonp',
                 error: function (xhr, status, error) {
-                    //console.log(error);
-                    //console.log(xhr.statusText);
-                    //console.log(xhr.responseText);
-                    amQryAddr = false;
-                }
+  //console.log(error);
+  //console.log(xhr.statusText);
+  //console.log(xhr.responseText);
+  amQryAddr = false;
+}
             });
         }
 
         $("#enteredAddr").keypress(function (event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
+  var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
-                // search on 'Enter' keypress
-                if (!amQryAddr) searchAddress();
-            }
-        });
+        // search on 'Enter' keypress
+        if (!amQryAddr) searchAddress();
+    }
+});
 
         $("#enteredRest").keypress(function (event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
+  var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
-                // search on 'Enter' keypress
-                if (!amQryRest) searchRestaurants();
-            }
-        });
+      // search on 'Enter' keypress
+      if (!amQryRest) searchRestaurants();
+    }
+});
 
-        function gotAddress(response) {
-            amQryAddr = false;
+function gotAddress(response) {
+  amQryAddr = false;
+  
+  if (response.length < 1) {
+    // tell user no results found and re-enable button
+    $('#myModal').modal();
+    $('#searchAddr').prop('disabled', false);
+    return;
+  }
+  
+  console.log(response);
+  var useAddr = response[0];
+  console.log(useAddr.display_name);
+  
+  //console.log(useAddr.lat + " " + useAddr.lon + " " + useAddr.display_name);
+  var myLatLng = L.latLng(useAddr.lat, useAddr.lon);
+  // re-enable button
+  $('#searchAddr').prop('disabled', false);
+  
+  if (myMarker) {  
+      //myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').update().openPopup();
+      myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.display_name + '</p>').update().openPopup();
+    } else {
+      //myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').setZIndexOffset(999).addTo(map).openPopup();
+      myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.display_name + '</p>').setZIndexOffset(999).addTo(map).openPopup();
+    }
+  
+  queryForLatLng(useAddr.lat, useAddr.lon);
+}
 
-            if (response.length < 1) {
-                // tell user no results found and re-enable button
-                $('#myModal').modal();
-                $('#searchAddr').prop('disabled', false);
-                return;
-            }
+L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', { attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.' }).addTo(map);
 
-            console.log(response);
-            var useAddr = response[0];
-            console.log(useAddr.display_name);
-
-            //console.log(useAddr.lat + " " + useAddr.lon + " " + useAddr.display_name);
-            var myLatLng = L.latLng(useAddr.lat, useAddr.lon);
-            // re-enable button
-            $('#searchAddr').prop('disabled', false);
-
-            if (myMarker) {
-                //myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').update().openPopup();
-                myMarker.setLatLng(myLatLng).setZIndexOffset(999).setPopupContent('<p>' + useAddr.display_name + '</p>').update().openPopup();
-            } else {
-                //myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.lat + ", " + useAddr.lon + '</p>').setZIndexOffset(999).addTo(map).openPopup();
-                myMarker = L.marker(myLatLng).bindPopup('<p>' + useAddr.display_name + '</p>').setZIndexOffset(999).addTo(map).openPopup();
-            }
-
-            queryForLatLng(useAddr.lat, useAddr.lon);
-        }
-
-        L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', { attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.' }).addTo(map);
-
-        function queryForLatLng(lat, lng) {
+function queryForLatLng(lat, lng) {
             map.setView([lat, lng], 14, { animate: true });
-            $('#loading').hide();
-        }
+  $('#loading').hide();
+}
 
-        // add sidebar
-        var sidebar = L.control.sidebar('sidebar', {
-            position: 'right'
-        });
+// add sidebar
+var sidebar = L.control.sidebar('sidebar', {
+    position: 'right'
+});
 
-        map.addControl(sidebar);
+map.addControl(sidebar);
 
-        // try HTML5 geolocation
-        $(document).ready(function () {
-            map.locate({ setView: true, maxZoom: 16, timeout: 5000 });
-            restMarkerGroup.addTo(map);
-            searchRestaurants();
-            //console.log(map.locate().locStr());
+// try HTML5 geolocation
+$(document).ready(function () {
+    map.locate({ setView: true, maxZoom: 16, timeout: 5000 });
+    restMarkerGroup.addTo(map);
+    searchRestaurants();
+    //console.log(map.locate().locStr());
             doUserThings();
 
             document.cookie = "menulator_memberID=3";
             document.cookie = "menulator_name=Mark Koh";
             document.cookie = "menulator_email=Mark@MarkKoh.net";
-        });
+});
 
-        function onLocationFound(e) {
-            console.log('got position.');
-            geoAllowed = true;
-            if (myMarker) {
-                myMarker.setLatLng(e.latlng).setZIndexOffset(99).setPopupContent('<p>' + ev.latlng + '</p>').update();
-            } else {
-                myMarker = L.marker(e.latlng).bindPopup('<p>' + e.latlng + '</p>').setZIndexOffset(99).addTo(map);
-            }
+function onLocationFound(e) {
+    console.log('got position.');
+    geoAllowed = true;
+  if (myMarker) {  
+    myMarker.setLatLng(e.latlng).setZIndexOffset(99).setPopupContent('<p>' + ev.latlng + '</p>').update();
+  } else {
+    myMarker = L.marker(e.latlng).bindPopup('<p>' + e.latlng + '</p>').setZIndexOffset(99).addTo(map);
+  }
+  
+  queryForLatLng(e.latlng.lat, e.latlng.lng);
+}
 
-            queryForLatLng(e.latlng.lat, e.latlng.lng);
-        }
+map.on('locationfound', onLocationFound);
 
-        map.on('locationfound', onLocationFound);
+function onLocationError(e) {
+    console.log(e.message);
+    geoAllowed = false;
+    $('#loading').hide();
 
-        function onLocationError(e) {
-            console.log(e.message);
-            geoAllowed = false;
-            $('#loading').hide();
+}
 
-        }
-
-        map.on('locationerror', onLocationError);
-
+map.on('locationerror', onLocationError);
+  
         map.on('contextmenu', function (ev) {
-            if (myMarker) {
-                myMarker.setLatLng(ev.latlng).setZIndexOffset(999).setPopupContent('<p>' + ev.latlng + '</p>').update(); //.openPopup();
-            } else {
-                myMarker = L.marker(ev.latlng).bindPopup('<p>' + ev.latlng + '</p>').setZIndexOffset(999).addTo(map); //.openPopup();
-            }
-            queryForLatLng(ev.latlng.lat, ev.latlng.lng);
-        });
+    if (myMarker) {  
+      myMarker.setLatLng(ev.latlng).setZIndexOffset(999).setPopupContent('<p>' + ev.latlng + '</p>').update(); //.openPopup();
+    } else {
+      myMarker = L.marker(ev.latlng).bindPopup('<p>' + ev.latlng + '</p>').setZIndexOffset(999).addTo(map); //.openPopup();
+    }
+    queryForLatLng(ev.latlng.lat, ev.latlng.lng);
+});
 
         $(document).ajaxStart(function () {
-            $('#loading').show();
+  $('#loading').show();
         }).ajaxStop(function () {
-            $('#loading').hide();
-        });
+  $('#loading').hide();
+});
 
         $("#loginButton").on('click', function () {
             var qryRestUrl = "http://menulator.azurewebsites.net/api/member/getmemberbyemail/"
@@ -485,6 +596,6 @@
 
         
 
-    </script>
+</script>
 </body>
 </html>
