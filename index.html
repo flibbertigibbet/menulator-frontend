@@ -291,9 +291,9 @@ function openMenusForLoc(locID) {
       
       // if got this far, have menu contents
       $.each(menu, function(menu, i) {
-        console.log(i);
+        // TODO:  add i.Description somewhere
         menuContent += '<li class="list-group-item">' + i.Name + ' - ' + 
-          i.Title + ' $' + i.Price + '</li>';
+          i.Title + '<span class="pull-right">$' + i.Price + '</span></li>';
       });
       $('#menuModalBody').append(menuContent + '</div>');
       $('#menuModal').modal('show');
