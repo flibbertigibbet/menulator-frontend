@@ -119,6 +119,7 @@
 
 <script>
 var myMarker;
+var myIcon = L.icon({ iconUrl: 'restaurant.png', iconSize: [31,42] });
 var geoJsonFeature;
 var ui = document.getElementById('map-ui');
 var map = L.map('map', {
@@ -128,7 +129,7 @@ var map = L.map('map', {
     minZoom: 3,
   }
 }).setView([39.5, -98.35], 4).setMaxBounds([[17,-130],[56,-61]]);
-var restMarkerGroup = new L.layerGroup();
+var restMarkerGroup = new L.featureGroup();
 
 $('form').submit(function () {
   return false;
@@ -179,10 +180,10 @@ function searchRestaurants(searchStr) {
       console.log('location ID: ' + i.LocationID);
       
       sidebarContent += '<a href="#" class="list-group-item">' + i.Title + '</a>';
-      aLatLng = L.latLng(i.Longitude, i.Latitude); // TODO: backward from server
-      aMarker = L.marker(aLatLng).addTo(restMarkerGroup).bindPopup(i.Title);
-      console.log(aMarker);
+      aLatLng = L.latLng(i.Latitude, i.Longitude);
+      aMarker = L.marker(aLatLng, {icon: myIcon}).addTo(restMarkerGroup).bindPopup(i.Title);
     });
+    map.fitBounds(restMarkerGroup.getBounds());
     amQryRest = false;
     sidebar.setContent(sidebarContent + '</div>');
     sidebar.show();
