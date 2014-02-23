@@ -118,7 +118,7 @@
 <div id='map' class="container"></div>
 
 <script>
-var myMarker;
+var myMarker, markerCol;
 var myIcon = L.icon({ iconUrl: 'restaurant.png', iconSize: [31,42] });
 var geoJsonFeature;
 var ui = document.getElementById('map-ui');
@@ -148,7 +148,7 @@ function searchRestaurants(searchStr) {
   sidebar.hide();
   restMarkerGroup.clearLayers();
   
-  var aMarker, aLatLng;
+  var aLatLng;
   
   var sidebarContent = '<h3>Results</h3><div class="panel panel-default"><div class="list-group" id="result-list">';
  
@@ -165,6 +165,7 @@ function searchRestaurants(searchStr) {
     console.log('done with search');
     console.log(data);
     
+    markerCol = new Array();
     if (data.length == 0) {
       amQryRest = false;
       sidebar.setContent('<h3>No Results</h3>');
@@ -173,21 +174,37 @@ function searchRestaurants(searchStr) {
     }
     
     $.each(data, function(data, i) {
+    /*
       console.log('restaurant name: ' + i.Title);
       console.log('location: ' + i.Latitude + ', ' + i.Longitude);
       console.log('phone: ' + i.Phone);
       console.log('restaurant ID: ' + i.RestaurantID);
       console.log('location ID: ' + i.LocationID);
-      
-      sidebarContent += '<a href="#" class="list-group-item">' + i.Title + '</a>';
+    */  
       aLatLng = L.latLng(i.Latitude, i.Longitude);
-      aMarker = L.marker(aLatLng, {icon: myIcon}).addTo(restMarkerGroup).bindPopup(i.Title);
+      sidebarContent += '<a href="javascript:void(0)" onclick="selectLoc(' + i.LocationID + ')" class="list-group-item">' + i.Title + '</a>';
+      var popupContent = '<p><b>' + i.Title + '</b></p><p>' + i.Address +
+        '</p><p>Phone: ' + i.Phone + '</p>'
+      var aMarker = L.marker(aLatLng, {icon: myIcon}).addTo(
+        restMarkerGroup).bindPopup(popupContent);
+      var locID = 'loc' + i.LocationID.toString();
+      markerCol[locID] = aMarker;
+      //markerCol.push( { i.LocationID : aMarker } );
     });
     map.fitBounds(restMarkerGroup.getBounds());
     amQryRest = false;
     sidebar.setContent(sidebarContent + '</div>');
     sidebar.show();
   });
+}
+
+function selectLoc(locID) {
+  console.log(locID);
+  console.log(markerCol);
+  var locStr = 'loc' + locID.toString();  
+  var thisMarker = markerCol[ locStr ];
+  thisMarker.openPopup();
+  map.setView(thisMarker.getLatLng(), 14, {animate: true});
 }
 
 var qryAddrUrl = "http://nominatim.openstreetmap.org/search?format=json&addressdetails=0&limit=1&countrycodes=US&json_callback=gotAddress"
